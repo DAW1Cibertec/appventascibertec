@@ -38,7 +38,7 @@
                         th:data-prodcod="${product.productid}"
                             th:data-prodname="${product.productname}"
                             th:data-produnit="${product.unitprice}"
-                            th:data-prodcateg="${product.category.categoriid}"
+                            th:data-prodcateg="${product.category.categoryid}"
                             th:data-prodsupp="${product.supplier.supplierid}"
                             th:data-proddiscont="${product.discontinued}">Actualizar</button>
                 </td>
@@ -47,5 +47,26 @@
         </table>
     </div>
 </div>
+
+<!-- Modal registro y actualización de producto -->
+<div class="modal fade" id="modalproduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>
