@@ -31,17 +31,41 @@ $(document).on("click", "#btnguardar", function(){
         data: JSON.stringify({
             productid: $("#hddprodcod").val(),
             productname: $("#txtnomproduct").val(),
-            unitprice: $("#txtunitpriceproduct").val(),
+            unitprice: $("#txtunipriceproduct").val(),
             categoryid: $("#cbocategory").val(),
             supplierid: $("#cbosupplier").val(),
             discontinued: $("#cbdiscontinued").prop("checked")
         }),
         success: function(resultado){
+            if(resultado.respuesta){
+                listarProductos()
+            }
             alert(resultado.mensaje);
         }
     });
     $("#modalproduct").modal("hide");
 });
+
+function listarProductos(){
+    $.ajax({
+        type: "GET",
+        url: "/product/list",
+        dataType: "json",
+        success: function(resultado){
+            $("#tblproducto > tbody").html("");
+            $.each(resultado, function(index, value){
+                $("#tblproducto > tbody").append(`<tr>`+
+                `<td>${value.productid}</td>`+
+                `<td>${value.productname}</td>`+
+                `<td>${value.unitprice}</td>`+
+                `<td>${value.category.categoryname}</td>`+
+                `<td>${value.supplier.companyname}</td>`+
+                `<td></td>`+
+                `</tr>`);
+            });
+        }
+    });
+}
 
 function listarCboCategorySupplier(idCategory, idSupplier){
     $.ajax({
