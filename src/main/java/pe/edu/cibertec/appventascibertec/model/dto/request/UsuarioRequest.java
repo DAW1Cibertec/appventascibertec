@@ -6,8 +6,9 @@ import lombok.Data;
 public class UsuarioRequest {
     private Integer idusuario;
     private String nomusuario;
+    private String password;
     private String nombres;
     private String apellidos;
-    private String activo;
+    private Boolean activo;
     private String email;
 }
