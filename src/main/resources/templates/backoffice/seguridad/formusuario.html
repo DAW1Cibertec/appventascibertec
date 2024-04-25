@@ -74,12 +74,9 @@
                            placeholder="name@example.com">
                     <label for="txtusuario">Usuario</label>
                 </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="txtpassword"
-                           placeholder="name@example.com">
-                    <label for="txtpassword">Password</label>
+                <div class="form-floating mb-3" id="divmsgpassword">
+                    <label class="form-label">El password será enviado por correo al email indicado en este formulario.</label>
                 </div>
-
                 <div class="form-check form-switch" id="switchusuario">
                     <input class="form-check-input" type="checkbox"
                            role="switch" id="cbactivo">
@@ -91,6 +88,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnguardar">Guardar</button>
+                <button type="button" class="btn btn-success" id="btnenviar">Enviar Password</button>
             </div>
         </div>
     </div>

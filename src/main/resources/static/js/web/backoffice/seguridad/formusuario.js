@@ -2,11 +2,14 @@ $(document).on("click", "#btnagregar", function(){
     $("#txtnombre").val("");
     $("#txtapellido").val("");
     $("#txtemail").val("");
+    $("#txtemail").prop('readonly', false);
     $("#txtusuario").val("");
-    $("#txtpassword").val("");
+    $("#txtusuario").prop('readonly', false);
     $("#hddidusuario").val("0");
     $("#switchusuario").hide();
     $("#cbactivo").prop("checked", false);
+    $("#divmsgpassword").show();
+    $("#btnenviar").hide();
     $("#modalusuario").modal("show");
 });
 $(document).on("click", ".btnactualizar", function(){
@@ -18,9 +21,13 @@ $(document).on("click", ".btnactualizar", function(){
            $("#txtnombre").val(resultado.nombres);
            $("#txtapellido").val(resultado.apellidos);
            $("#txtemail").val(resultado.email);
+           $("#txtemail").prop('readonly', true);
            $("#txtusuario").val(resultado.nomusuario);
-           $("#hddidusuario").val($(this).attr("data-usuid"));
-            $("#switchusuario").show();
+           $("#txtusuario").prop('readonly', true);
+           $("#hddidusuario").val(resultado.idusuario);
+           $("#switchusuario").show();
+           $("#divmsgpassword").hide();
+           $("#btnenviar").show();
            if(resultado.activo)
               $("#cbactivo").prop("checked", true);
            else
@@ -28,19 +35,6 @@ $(document).on("click", ".btnactualizar", function(){
         }
     })
     $("#modalusuario").modal("show");
-    /*$("#txtnomproduct").val($(this).attr("data-prodname"));
-    $("#txtunipriceproduct").val($(this).attr("data-produnit"));
-    $("#hddprodcod").val($(this).attr("data-prodcod"));
-    $("#cbocategory").empty();
-    $("#cbosupplier").empty();
-    listarCboCategorySupplier($(this).attr("data-prodcateg"),
-                $(this).attr("data-prodsupp"));
-    $("#switchproducto").show();
-    if($(this).attr("data-proddiscont") === "true"){
-        $("#cbdiscontinued").prop("checked", true);
-    }else
-        $("#cbdiscontinued").prop("checked", false);
-    $("#modalproduct").modal("show");*/
 })
 
 $(document).on("click", "#btnguardar", function(){
