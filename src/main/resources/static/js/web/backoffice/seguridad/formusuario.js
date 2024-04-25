@@ -2,11 +2,14 @@ $(document).on("click", "#btnagregar", function(){
     $("#txtnombre").val("");
     $("#txtapellido").val("");
     $("#txtemail").val("");
+    $("#txtemail").prop('readonly', false);
     $("#txtusuario").val("");
-    $("#txtpassword").val("");
+    $("#txtusuario").prop('readonly', false);
     $("#hddidusuario").val("0");
     $("#switchusuario").hide();
     $("#cbactivo").prop("checked", false);
+    $("#divmsgpassword").show();
+    $("#btnenviar").hide();
     $("#modalusuario").modal("show");
 });
 $(document).on("click", ".btnactualizar", function(){
@@ -18,9 +21,13 @@ $(document).on("click", ".btnactualizar", function(){
            $("#txtnombre").val(resultado.nombres);
            $("#txtapellido").val(resultado.apellidos);
            $("#txtemail").val(resultado.email);
+           $("#txtemail").prop('readonly', true);
            $("#txtusuario").val(resultado.nomusuario);
-           $("#hddidusuario").val($(this).attr("data-usuid"));
-            $("#switchusuario").show();
+           $("#txtusuario").prop('readonly', true);
+           $("#hddidusuario").val(resultado.idusuario);
+           $("#switchusuario").show();
+           $("#divmsgpassword").hide();
+           $("#btnenviar").show();
            if(resultado.activo)
               $("#cbactivo").prop("checked", true);
            else
@@ -28,65 +35,47 @@ $(document).on("click", ".btnactualizar", function(){
         }
     })
     $("#modalusuario").modal("show");
-    /*$("#txtnomproduct").val($(this).attr("data-prodname"));
-    $("#txtunipriceproduct").val($(this).attr("data-produnit"));
-    $("#hddprodcod").val($(this).attr("data-prodcod"));
-    $("#cbocategory").empty();
-    $("#cbosupplier").empty();
-    listarCboCategorySupplier($(this).attr("data-prodcateg"),
-                $(this).attr("data-prodsupp"));
-    $("#switchproducto").show();
-    if($(this).attr("data-proddiscont") === "true"){
-        $("#cbdiscontinued").prop("checked", true);
-    }else
-        $("#cbdiscontinued").prop("checked", false);
-    $("#modalproduct").modal("show");*/
 })
 
 $(document).on("click", "#btnguardar", function(){
     $.ajax({
         type: "POST",
-        url: "/product/register",
+        url: "/seguridad/usuario/registrar",
         contentType: "application/json",
         data: JSON.stringify({
-            productid: $("#hddprodcod").val(),
-            productname: $("#txtnomproduct").val(),
-            unitprice: $("#txtunipriceproduct").val(),
-            categoryid: $("#cbocategory").val(),
-            supplierid: $("#cbosupplier").val(),
-            discontinued: $("#cbdiscontinued").prop("checked")
+            idusuario: $("#hddidusuario").val(),
+            nomusuario: $("#txtusuario").val(),
+            nombres: $("#txtnombre").val(),
+            apellidos: $("#txtapellido").val(),
+            email: $("#txtemail").val(),
+            activo: $("#cbactivo").prop("checked")
         }),
         success: function(resultado){
             if(resultado.respuesta){
-                listarProductos()
+                listarUsuarios()
             }
             alert(resultado.mensaje);
         }
     });
-    $("#modalproduct").modal("hide");
+    $("#modalusuario").modal("hide");
 });
 
-function listarProductos(){
+function listarUsuarios(){
     $.ajax({
         type: "GET",
-        url: "/product/list",
+        url: "/seguridad/usuario/lista",
         dataType: "json",
         success: function(resultado){
-            $("#tblproducto > tbody").html("");
+            $("#tblusuario > tbody").html("");
             $.each(resultado, function(index, value){
-                $("#tblproducto > tbody").append(`<tr>`+
-                `<td>${value.productid}</td>`+
-                `<td>${value.productname}</td>`+
-                `<td>${value.unitprice}</td>`+
-                `<td>${value.category.categoryname}</td>`+
-                `<td>${value.supplier.companyname}</td>`+
+                $("#tblusuario > tbody").append(`<tr>`+
+                `<td>${value.nombres}</td>`+
+                `<td>${value.apellidos}</td>`+
+                `<td>${value.nomusuario}</td>`+
+                `<td>${value.email}</td>`+
+                `<td>${value.activo}</td>`+
                 `<td><button type='button' class='btn btn-primary btnactualizar' `+
-                    `data-prodcod="${value.productid}" `+
-                    `data-prodname="${value.productname}" `+
-                    `data-produnit="${value.unitprice}" `+
-                    `data-prodcateg="${value.category.categoryid}" `+
-                    `data-prodsupp="${value.supplier.supplierid}" `+
-                    `data-proddiscont="${value.discontinued}">Actualizar`+
+                    `data-usuid="${value.idusuario}">Actualizar`+
                 `</button></td>`+
                 `</tr>`);
             });
